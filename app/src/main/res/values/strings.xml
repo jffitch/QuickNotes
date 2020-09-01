@@ -12,4 +12,23 @@
     <string name="statistics">Statistics</string>
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
+
+    <!-- Login Screen -->
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="reenter_password">Reenter Password</string>
+    <string name="new_user">New User</string>
+    <string name="facebook">Facebook</string>
+    <string name="google">Google</string>
+
+    <!-- Note Screen -->
+    <string name="tags">Tags</string>
+    <string name="receive_notification">Receive Notification?</string>
+    <string name="notification_time">Notification Time</string>
+    <string name="default_time">00:00:00</string>
+    <string name="submit">Submit</string>
+
+    <!-- Search Screen -->
+    <string name="keywords">Keywords</string>
 </resources>
