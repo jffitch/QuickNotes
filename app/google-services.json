@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "897612586912",
+    "firebase_url": "https://quick-notes-49166.firebaseio.com",
+    "project_id": "quick-notes-49166",
+    "storage_bucket": "quick-notes-49166.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:897612586912:android:6a3b06b0735ec11c030ec5",
+        "android_client_info": {
+          "package_name": "com.mathgeniusguide.quicknotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "897612586912-tiust8poaa382q04qatgmk8e0d5n7uda.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mathgeniusguide.quicknotes",
+            "certificate_hash": "3abefd2e60f0eb78d9cf2bca0603b120177d1b80"
+          }
+        },
+        {
+          "client_id": "897612586912-u2694bn5pg17i9iutemh8t0u4gabu5c3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8frqL5uhxeJT_2jjeBOAvQazqBtH42hw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "897612586912-u2694bn5pg17i9iutemh8t0u4gabu5c3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
