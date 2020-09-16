@@ -111,6 +111,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/notificationTimeLabel" />
 
+        <Button
+            android:id="@+id/saveBU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/save"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/submitBU"
+            app:layout_constraintTop_toBottomOf="@id/notificationTimeLabel" />
+
+        <Button
+            android:id="@+id/deleteBU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/delete"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/saveBU"
+            app:layout_constraintTop_toBottomOf="@id/notificationTimeLabel" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
 

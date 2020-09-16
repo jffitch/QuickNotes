@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.*
 import com.mathgeniusguide.quicknotes.database.Note
+import com.mathgeniusguide.quicknotes.database.Tag
 import com.mathgeniusguide.quicknotes.util.Constants
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -21,7 +22,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var navController: NavController
     lateinit var database: DatabaseReference
     var noteList = emptyList<Note>().toMutableList()
-    var tagList = emptyList<String>().toMutableList()
+    var noteListSelected = emptyList<Note>().toMutableList()
+    var noteSelected = Note.create()
+    var tagList = emptyList<Tag>().toMutableList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,6 +33,17 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(nav_host_fragment)
         toolbar.setupWithNavController(navController)
         tabs.setupWithNavController(navController)
+
+        tabs.setOnNavigationItemSelectedListener {
+            if (it.itemId == R.id.note) {
+                noteSelected = Note.create()
+                noteSelected.id = ""
+                noteSelected.tags = ""
+                noteSelected.time = ""
+                noteSelected.content = ""
+            }
+            it.onNavDestinationSelected(navController)
+        }
 
         val toggle = ActionBarDrawerToggle(
             this,
@@ -74,10 +88,12 @@ class MainActivity : AppCompatActivity() {
             note.content = map.get("content") as String?
             note.tags = map.get("tags") as String?
             noteList.add(note)
-            tagList.addAll(note.tags?.split(",") ?: emptyList())
+            for (tag in (note.tags ?: "").split(",")) {
+                tagList.add(Tag(tag, false))
+            }
         }
-        tagList = tagList.distinct().filter { it.length <= 15 }.toMutableList()
-        tagList.sort()
+        tagList = tagList.distinctBy {it.id}.filter { it.id.length <= 20 && it.id.isNotEmpty()}.toMutableList()
+        tagList.sortBy {it.id}
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

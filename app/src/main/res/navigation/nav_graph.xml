@@ -50,5 +50,9 @@
         android:name="com.mathgeniusguide.quicknotes.fragments.ListFragment"
         android:label="@string/list"
         tools:layout="@layout/list_fragment">
+        <action android:id="@+id/action_edit"
+            app:destination="@id/note"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out" />
     </fragment>
 </navigation>

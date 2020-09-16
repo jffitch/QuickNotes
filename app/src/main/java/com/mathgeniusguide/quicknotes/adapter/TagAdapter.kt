@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mathgeniusguide.quicknotes.MainActivity
 import com.mathgeniusguide.quicknotes.R
+import com.mathgeniusguide.quicknotes.database.Tag
 import kotlinx.android.synthetic.main.tag_item.view.*
 
-class TagAdapter (private val items: List<String>, val act: MainActivity) : RecyclerView.Adapter<TagAdapter.ViewHolder> () {
+class TagAdapter (private val items: List<Tag>, val act: MainActivity) : RecyclerView.Adapter<TagAdapter.ViewHolder> () {
     override fun getItemCount(): Int {
         return items.size
     }
@@ -20,10 +21,10 @@ class TagAdapter (private val items: List<String>, val act: MainActivity) : Recy
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val i = items[position]
-        holder.tagName.text = i
+        holder.tagName.text = i.id
         holder.tagChecked.isChecked = false
         holder.tagChecked.setOnClickListener {
-            act.tagList
+            act.tagList[act.tagList.indexOfFirst { it.id == i.id }].checked = holder.tagChecked.isChecked
         }
     }
 
