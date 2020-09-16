@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     var noteListSelected = emptyList<Note>().toMutableList()
     var noteSelected = Note.create()
     var tagList = emptyList<Tag>().toMutableList()
+    var searchDescription = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -94,6 +95,7 @@ class MainActivity : AppCompatActivity() {
         }
         tagList = tagList.distinctBy {it.id}.filter { it.id.length <= 20 && it.id.isNotEmpty()}.toMutableList()
         tagList.sortBy {it.id}
+        noteList.sortByDescending { it.time }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

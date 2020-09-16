@@ -36,8 +36,8 @@
     <string name="no">No</string>
     <string name="save_note">Save Note</string>
     <string name="delete_note">Delete Note</string>
-    <string name="save_alert">"Are you sure you want to replace this note?"</string>
-    <string name="delete_alert">"Are you sure you want to delete this note?"</string>
+    <string name="save_alert">Are you sure you want to replace this note?</string>
+    <string name="delete_alert">Are you sure you want to delete this note?</string>
 
     <!-- Search Screen -->
     <string name="keywords">Keywords</string>
@@ -45,4 +45,9 @@
     <!-- List Screen -->
     <string name="date">Date</string>
     <string name="description">Description</string>
+    <string name="all_posts">All Posts</string>
+    <string name="posts_involving">Posts involving %1$s</string>
+    <string name="posts_tagged">Posts tagged %1$s</string>
+    <string name="posts_involving_and_tagged">Posts involving %1$s and tagged %2$s</string>
+
 </resources>

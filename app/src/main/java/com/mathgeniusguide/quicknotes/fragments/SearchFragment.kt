@@ -57,12 +57,27 @@ class SearchFragment : Fragment() {
 
     fun searchClicked() {
         val tagsSelected = act.tagList.filter { it.checked }.map {it.id}
+        val tagsString = tagsSelected.joinToString(", ")
         val keywords = keywordET.text.toString().toLowerCase(Locale.getDefault()).trim(' ')
         act.noteListSelected = act.noteList
             .filter {(it.content ?: "").toLowerCase(Locale.getDefault()).contains(keywords)}
             .filter {tagsMatch((it.tags ?: "").split(","), tagsSelected)}
             .toMutableList()
         if (act.noteListSelected.isNotEmpty()) {
+            if (tagsString.isEmpty()) {
+                if (keywords.isEmpty()) {
+                    act.searchDescription = resources.getString(R.string.all_posts)
+                } else {
+                    act.searchDescription = String.format(resources.getString(R.string.posts_involving), keywords)
+                }
+            } else {
+                if (keywords.isEmpty()) {
+                    act.searchDescription = String.format(resources.getString(R.string.posts_tagged), tagsString)
+                } else {
+                    act.searchDescription = String.format(resources.getString(R.string.posts_involving_and_tagged), keywords, tagsString)
+                }
+            }
+
             findNavController().navigate(R.id.action_search_to_list)
         } else {
             Toast.makeText(context, "No notes match your search.", Toast.LENGTH_LONG).show()

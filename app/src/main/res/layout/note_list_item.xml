@@ -40,7 +40,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginStart="5dp"
         android:textStyle="italic"
-        android:textColor="#0000ff"/>
+        android:textColor="#8080ff"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

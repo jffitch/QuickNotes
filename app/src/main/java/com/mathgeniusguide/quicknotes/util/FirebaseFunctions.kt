@@ -4,7 +4,7 @@ import com.google.firebase.database.DatabaseReference
 import com.mathgeniusguide.quicknotes.database.Note
 
 object FirebaseFunctions {
-    fun createNote(time: String, content: String, tags: String, database: DatabaseReference) {
+    fun createNote(time: String, content: String, tags: String, database: DatabaseReference): String? {
         val newItem = database.child(Constants.NOTES).push()
         val note = Note.create()
         note.id = newItem.key
@@ -12,6 +12,7 @@ object FirebaseFunctions {
         note.content = content
         note.tags = tags
         newItem.setValue(note)
+        return note.id
     }
 
     fun updateNote(itemKey: String, time: String, content: String, tags: String, database: DatabaseReference) {
