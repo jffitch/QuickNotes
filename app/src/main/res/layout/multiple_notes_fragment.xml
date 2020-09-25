@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/notesET"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_weight="1"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:hint="@string/note"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/submitBU"/>
+
+    <Button
+        android:id="@+id/submitBU"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/submit"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/notesET" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Code Generator
+    noteET, et, m, 150, tm10, cm10
+    tagsET, et, mw, 0m10,, cm10
+    tagsRV, rv, mw, 1m10,, cm10
+    notificationLabel, tvb20, ww, x-1m15,, lm15
+    notificationSwitch, sw, ww, x-1,, rm15
+    notificationTimeLabel, tv15, ww, x-2m10,, lm10
+    notificationTimeET, et, fw, x-1,, rm10
+    submitBU, bub25, ww, x-2m15,, lm15
+    -->

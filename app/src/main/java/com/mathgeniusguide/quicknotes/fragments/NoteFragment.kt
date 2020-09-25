@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.mathgeniusguide.quicknotes.MainActivity
 import com.mathgeniusguide.quicknotes.R
+import com.mathgeniusguide.quicknotes.adapter.TagAdapter
 import com.mathgeniusguide.quicknotes.database.Note
 import com.mathgeniusguide.quicknotes.database.Tag
 import com.mathgeniusguide.quicknotes.util.FirebaseFunctions
@@ -61,14 +63,41 @@ class NoteFragment : Fragment() {
         }
 
         alert = AlertDialog.Builder(context)
+
+        setUpTags()
+
+        act.firebaseLoaded.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (it) {
+                setUpTags()
+            }
+        })
+    }
+
+    fun setUpTags() {
+        val tagsHalves = listOf(emptyList<Tag>().toMutableList(), emptyList<Tag>().toMutableList())
+        var tagsHalf = 0
+        for (i in act.tagList) {
+            tagsHalves[tagsHalf].add(i)
+            tagsHalf = 1 - tagsHalf
+        }
+        tagsRV0.layoutManager = LinearLayoutManager(context)
+        tagsRV0.adapter = TagAdapter(tagsHalves[0], act)
+        tagsRV1.layoutManager = LinearLayoutManager(context)
+        tagsRV1.adapter = TagAdapter(tagsHalves[1], act)
+
+        for (i in act.tagList) {
+            i.checked = false
+        }
     }
 
     fun submitClicked() {
         val content = noteET.text.toString()
         val tags = tagsET.text.toString().replace(Regex(" *, *"), ",").trim()
+        val tagsSelected = act.tagList.filter { it.checked }.map {it.id}
+        val tagsSelectedString = tagsSelected.map { ",${it}" }.joinToString("")
         val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
         val time = sdf.format(Date())
-        val id = FirebaseFunctions.createNote(time, content, tags, act.database)
+        val id = FirebaseFunctions.createNote(time, content, tags + tagsSelectedString, act.database)
         Toast.makeText(context, "Your note has been added.", Toast.LENGTH_LONG).show()
         noteET.setText("")
         tagsET.setText("")
@@ -76,7 +105,7 @@ class NoteFragment : Fragment() {
         note.id = id
         note.content = content
         note.time = time
-        note.tags = tags
+        note.tags = tags + tagsSelectedString
         act.noteList.add(note)
         for (tag in (note.tags ?: "").split(",")) {
             act.tagList.add(Tag(tag, false))

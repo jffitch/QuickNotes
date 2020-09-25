@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/note">
+    app:startDestination="@id/login">
     <action android:id="@+id/action_logout"
         app:destination="@id/login"
         app:enterAnim="@anim/push_left_in"
@@ -22,10 +22,10 @@
             app:enterAnim="@anim/push_left_in"
             app:exitAnim="@anim/push_left_out" />
     </fragment>
-    <fragment android:id="@+id/statistics"
-        android:name="com.mathgeniusguide.quicknotes.fragments.StatisticsFragment"
-        android:label="@string/statistics"
-        tools:layout="@layout/statistics_fragment">
+    <fragment android:id="@+id/multipleNotes"
+        android:name="com.mathgeniusguide.quicknotes.fragments.MultipleNotesFragment"
+        android:label="@string/multiple_notes"
+        tools:layout="@layout/multiple_notes_fragment">
     </fragment>
     <fragment android:id="@+id/login"
         android:name="com.mathgeniusguide.quicknotes.fragments.LoginFragment"

@@ -60,20 +60,23 @@
         app:layout_constraintStart_toEndOf="@id/newUserBU"
         app:layout_constraintEnd_toEndOf="@id/reenterET" />
 
-    <Button
+    <com.google.android.gms.common.SignInButton
         style="@style/login_buttons"
-        android:text="@string/facebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/newUserBU"
+        app:layout_constraintStart_toEndOf="@id/facebookBU"
+        app:layout_constraintEnd_toEndOf="@id/loginBU"
+        android:id="@+id/googleBU"/>
+
+    <com.facebook.login.widget.LoginButton
+        style="@style/login_buttons"
         android:id="@+id/facebookBU"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         app:layout_constraintTop_toBottomOf="@id/newUserBU"
         app:layout_constraintStart_toStartOf="@id/newUserBU"
         app:layout_constraintEnd_toStartOf="@id/googleBU" />
-
-    <Button
-        style="@style/login_buttons"
-        android:text="@string/google"
-        android:id="@+id/googleBU"
-        app:layout_constraintTop_toBottomOf="@id/newUserBU"
-        app:layout_constraintStart_toEndOf="@id/facebookBU"
-        app:layout_constraintEnd_toEndOf="@id/loginBU" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,6 +35,15 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setUpTags()
+
+        searchBU.setOnClickListener {
+            searchClicked()
+        }
+    }
+
+    fun setUpTags() {
         val tagsHalves = listOf(emptyList<Tag>().toMutableList(), emptyList<Tag>().toMutableList())
         var tagsHalf = 0
         for (i in act.tagList) {
@@ -48,10 +57,6 @@ class SearchFragment : Fragment() {
 
         for (i in act.tagList) {
             i.checked = false
-        }
-
-        searchBU.setOnClickListener {
-            searchClicked()
         }
     }
 
