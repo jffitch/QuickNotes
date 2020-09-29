@@ -12,7 +12,6 @@ import com.mathgeniusguide.quicknotes.MainActivity
 import com.mathgeniusguide.quicknotes.R
 import com.mathgeniusguide.quicknotes.adapter.TagAdapter
 import com.mathgeniusguide.quicknotes.database.Tag
-import kotlinx.android.synthetic.main.list_fragment.*
 import kotlinx.android.synthetic.main.search_fragment.*
 import java.util.*
 

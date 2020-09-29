@@ -26,6 +26,10 @@
     <string name="new_user">New User</string>
     <string name="facebook">Facebook</string>
     <string name="google">Google</string>
+    <string name="sign_in">Sign In</string>
+    <string name="new_account">New Account</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="password_reset_email_sent">Password Reset Email Sent</string>
 
     <!-- Note Screen -->
     <string name="tags">Tags</string>
@@ -55,4 +59,11 @@
     <string name="posts_tagged">Posts tagged %1$s</string>
     <string name="posts_involving_and_tagged">Posts involving %1$s and tagged %2$s</string>
 
+    <!-- Error Messages -->
+    <string name="fields_empty">Please fill in all fields.</string>
+    <string name="email_required">Email is required.</string>
+    <string name="email_password_required">Email and Password are required.</string>
+    <string name="passwords_must_match">Passwords must match.</string>
+    <string name="email_displayname_password_reenter_required">Email, Display Name, Password, and Reenter Password are required.</string>
+    <string name="invalid_email">Invalid Email</string>
 </resources>

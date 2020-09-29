@@ -12,7 +12,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment.findNavController
@@ -20,7 +19,6 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.facebook.CallbackManager
-import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.Auth
@@ -32,6 +30,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.*
 import com.mathgeniusguide.quicknotes.database.Note
 import com.mathgeniusguide.quicknotes.database.Tag
@@ -159,8 +158,9 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
                 tagList.add(Tag(tag, false))
             }
         }
-        tagList = tagList.distinctBy {it.id}.filter { it.id.length <= 20 && it.id.isNotEmpty()}.toMutableList()
-        tagList.sortBy {it.id}
+        tagList = tagList.distinctBy { it.id }.filter { it.id.length <= 20 && it.id.isNotEmpty() }
+            .toMutableList()
+        tagList.sortBy { it.id }
         noteList.sortByDescending { it.time }
         firebaseLoaded.postValue(true)
     }
@@ -221,6 +221,61 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
                     login(firebaseAuth.currentUser)
                 }
             })
+    }
+
+    private fun updateDisplayName(user: FirebaseUser?, displayName: String) {
+        if (user != null) {
+            val profileUpdates = UserProfileChangeRequest.Builder()
+                .setDisplayName(displayName).build()
+            user.updateProfile(profileUpdates)
+        }
+    }
+
+    fun newUser(email: String, password: String, displayName: String) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "createUserWithEmail:success")
+                    val user = firebaseAuth.currentUser
+                    updateDisplayName(user, displayName)
+                    login(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                    Toast.makeText(baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    fun loginUser(email: String, password: String) {
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithEmail:success")
+                    val user = firebaseAuth.currentUser
+                    login(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithEmail:failure", task.exception)
+                    Toast.makeText(baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    fun passwordReset(email: String) {
+        if (email.isEmpty()) {
+            Toast.makeText(this, resources.getString(R.string.email_required), Toast.LENGTH_LONG).show()
+            return
+        }
+        firebaseAuth.sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                val message = resources.getString(if (task.isSuccessful) R.string.password_reset_email_sent else R.string.invalid_email)
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+            }
     }
 
     fun login(user: FirebaseUser?) {
