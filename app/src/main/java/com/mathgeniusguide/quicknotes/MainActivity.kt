@@ -1,5 +1,7 @@
 package com.mathgeniusguide.quicknotes
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -35,6 +37,7 @@ import com.google.firebase.database.*
 import com.mathgeniusguide.quicknotes.database.Note
 import com.mathgeniusguide.quicknotes.database.Tag
 import com.mathgeniusguide.quicknotes.util.Constants
+import com.mathgeniusguide.quicknotes.util.FirebaseFunctions
 import com.mathgeniusguide.quicknotes.util.FirebaseFunctions.createNote
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -308,19 +311,26 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
     }
 
     private fun logout(): Boolean {
-        // sign out of firebase
-        firebaseAuth.signOut()
-        Auth.GoogleSignInApi.signOut(googleApiClient)
-        LoginManager.getInstance().logOut()
-        callbackManager = null
-        // set user information to defaults
-        username = ANONYMOUS
-        firebaseUser = null
-        photoUrl = ""
-        navController.navigate(R.id.action_logout)
-        tabs.visibility = View.GONE
-        toolbar.visibility = View.GONE
-        drawer_layout.closeDrawer(GravityCompat.START)
+        val alert = AlertDialog.Builder(this)
+        alert.setTitle(R.string.logout)
+        alert.setMessage(R.string.logout_alert)
+        alert.setPositiveButton(R.string.yes, DialogInterface.OnClickListener { dialog, which ->
+            // sign out of firebase
+            firebaseAuth.signOut()
+            Auth.GoogleSignInApi.signOut(googleApiClient)
+            LoginManager.getInstance().logOut()
+            callbackManager = null
+            // set user information to defaults
+            username = ANONYMOUS
+            firebaseUser = null
+            photoUrl = ""
+            navController.navigate(R.id.action_logout)
+            tabs.visibility = View.GONE
+            toolbar.visibility = View.GONE
+            drawer_layout.closeDrawer(GravityCompat.START)
+        })
+        alert.setNegativeButton(R.string.no, null)
+        alert.show()
         return true
     }
 }

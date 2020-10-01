@@ -9,7 +9,7 @@
         android:title="@string/search"
         android:icon="@drawable/search" />
     <item
-        android:id="@+id/statistics"
-        android:title="@string/statistics"
-        android:icon="@drawable/statistics" />
+        android:id="@+id/multipleNotes"
+        android:title="@string/multiple_notes"
+        android:icon="@drawable/multiple_notes" />
 </menu>

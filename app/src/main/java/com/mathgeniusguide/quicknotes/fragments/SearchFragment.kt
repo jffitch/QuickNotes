@@ -40,6 +40,10 @@ class SearchFragment : Fragment() {
         searchBU.setOnClickListener {
             searchClicked()
         }
+
+        searchUntaggedBU.setOnClickListener {
+            searchUntaggedClicked()
+        }
     }
 
     fun setUpTags() {
@@ -82,6 +86,24 @@ class SearchFragment : Fragment() {
                 }
             }
 
+            findNavController().navigate(R.id.action_search_to_list)
+        } else {
+            Toast.makeText(context, "No notes match your search.", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    fun searchUntaggedClicked() {
+        val keywords = keywordET.text.toString().toLowerCase(Locale.getDefault()).trim(' ')
+        act.noteListSelected = act.noteList
+            .filter {(it.content ?: "").toLowerCase(Locale.getDefault()).contains(keywords)}
+            .filter {(it.tags ?: "").matches(Regex("^[ ,]*$"))}
+            .toMutableList()
+        if (act.noteListSelected.isNotEmpty()) {
+            if (keywords.isEmpty()) {
+                    act.searchDescription = resources.getString(R.string.untagged_posts)
+                } else {
+                    act.searchDescription = String.format(resources.getString(R.string.untagged_posts_involving), keywords)
+                }
             findNavController().navigate(R.id.action_search_to_list)
         } else {
             Toast.makeText(context, "No notes match your search.", Toast.LENGTH_LONG).show()
