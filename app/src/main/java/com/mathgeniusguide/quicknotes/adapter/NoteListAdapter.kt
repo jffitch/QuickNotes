@@ -23,7 +23,7 @@ class NoteListAdapter (private val items: List<Note>, val act: MainActivity, val
         val i = items[position]
         holder.note.text = i.content
         holder.date.text = i.time
-        holder.tags.text = (i.tags ?: "").split(",").map {"#${it}"}.joinToString(" ")
+        holder.tags.text = (i.tags ?: "").split(",").filter {it.isNotBlank()}.map {"#${it}"}.joinToString(" ")
         holder.parent.setOnClickListener {
             act.noteSelected = i
             navController.navigate(R.id.action_edit)

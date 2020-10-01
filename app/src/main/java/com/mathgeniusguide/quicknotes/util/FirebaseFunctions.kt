@@ -4,8 +4,8 @@ import com.google.firebase.database.DatabaseReference
 import com.mathgeniusguide.quicknotes.database.Note
 
 object FirebaseFunctions {
-    fun createNote(time: String, content: String, tags: String, database: DatabaseReference): String? {
-        val newItem = database.child(Constants.NOTES).push()
+    fun createNote(time: String, content: String, tags: String, database: DatabaseReference, uid: String): String? {
+        val newItem = database.child(Constants.NOTES).child(uid).push()
         val note = Note.create()
         note.id = newItem.key
         note.time = time
@@ -15,30 +15,30 @@ object FirebaseFunctions {
         return note.id
     }
 
-    fun updateNote(itemKey: String, time: String, content: String, tags: String, database: DatabaseReference) {
-        val itemReference = database.child(Constants.NOTES).child(itemKey)
+    fun updateNote(itemKey: String, time: String, content: String, tags: String, database: DatabaseReference, uid: String) {
+        val itemReference = database.child(Constants.NOTES).child(uid).child(itemKey)
         itemReference.child("time").setValue(time)
         itemReference.child("content").setValue(content)
         itemReference.child("tags").setValue(tags)
     }
 
-    fun updateNoteTime(itemKey: String, time: String, database: DatabaseReference) {
-        val itemReference = database.child(Constants.NOTES).child(itemKey)
+    fun updateNoteTime(itemKey: String, time: String, database: DatabaseReference, uid: String) {
+        val itemReference = database.child(Constants.NOTES).child(uid).child(itemKey)
         itemReference.child("time").setValue(time)
     }
 
-    fun updateNoteContent(itemKey: String, content: String, database: DatabaseReference) {
-        val itemReference = database.child(Constants.NOTES).child(itemKey)
+    fun updateNoteContent(itemKey: String, content: String, database: DatabaseReference, uid: String) {
+        val itemReference = database.child(Constants.NOTES).child(uid).child(itemKey)
         itemReference.child("content").setValue(content)
     }
 
-    fun updateNoteTags(itemKey: String, tags: String, database: DatabaseReference) {
-        val itemReference = database.child(Constants.NOTES).child(itemKey)
+    fun updateNoteTags(itemKey: String, tags: String, database: DatabaseReference, uid: String) {
+        val itemReference = database.child(Constants.NOTES).child(uid).child(itemKey)
         itemReference.child("tags").setValue(tags)
     }
 
-    fun deleteNote(itemKey: String, database: DatabaseReference) {
-        val itemReference = database.child(Constants.NOTES).child(itemKey)
+    fun deleteNote(itemKey: String, database: DatabaseReference, uid: String) {
+        val itemReference = database.child(Constants.NOTES).child(uid).child(itemKey)
         itemReference.removeValue()
     }
 }

@@ -35,6 +35,7 @@ import com.google.firebase.database.*
 import com.mathgeniusguide.quicknotes.database.Note
 import com.mathgeniusguide.quicknotes.database.Tag
 import com.mathgeniusguide.quicknotes.util.Constants
+import com.mathgeniusguide.quicknotes.util.FirebaseFunctions.createNote
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedListener {
@@ -144,7 +145,9 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
     }
 
     private fun addDataToList(dataSnapshot: DataSnapshot) {
-        val notes = dataSnapshot.child(Constants.NOTES).children.iterator()
+        val notes = dataSnapshot.child(Constants.NOTES).child(firebaseUser?.uid ?: ANONYMOUS).children.iterator()
+        noteList.clear()
+        tagList.clear()
         while (notes.hasNext()) {
             val currentItem = notes.next()
             val note = Note.create()

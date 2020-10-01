@@ -94,10 +94,10 @@ class NoteFragment : Fragment() {
         val content = noteET.text.toString()
         val tags = tagsET.text.toString().replace(Regex(" *, *"), ",").trim()
         val tagsSelected = act.tagList.filter { it.checked }.map {it.id}
-        val tagsSelectedString = tagsSelected.map { ",${it}" }.joinToString("")
+        val tagsSelectedString = tagsSelected.joinToString(",")
         val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
         val time = sdf.format(Date())
-        val id = FirebaseFunctions.createNote(time, content, tags + tagsSelectedString, act.database)
+        val id = FirebaseFunctions.createNote(time, content, tags + (if (tags.isBlank() || tagsSelectedString.isBlank()) "" else ",") + tagsSelectedString, act.database, act.firebaseUser?.uid ?: act.ANONYMOUS)
         Toast.makeText(context, "Your note has been added.", Toast.LENGTH_LONG).show()
         noteET.setText("")
         tagsET.setText("")
@@ -127,7 +127,8 @@ class NoteFragment : Fragment() {
                 act.noteSelected.time ?: "",
                 content,
                 tags,
-                act.database
+                act.database,
+                act.firebaseUser?.uid ?: act.ANONYMOUS
             )
             val note = act.noteList.first { it.id == act.noteSelected.id ?: "" }
             note.content = content
@@ -148,7 +149,7 @@ class NoteFragment : Fragment() {
         alert.setTitle(R.string.delete_note)
         alert.setMessage(R.string.delete_alert)
         alert.setPositiveButton(R.string.yes, DialogInterface.OnClickListener { dialog, which ->
-            FirebaseFunctions.deleteNote(act.noteSelected.id ?: "", act.database)
+            FirebaseFunctions.deleteNote(act.noteSelected.id ?: "", act.database, act.firebaseUser?.uid ?: act.ANONYMOUS)
             noteET.setText("")
             tagsET.setText("")
             saveBU.visibility = View.GONE

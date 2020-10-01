@@ -48,7 +48,7 @@ class MultipleNotesFragment : Fragment() {
         val content = notesET.text.toString()
         val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
         val time = sdf.format(Date())
-        val id = FirebaseFunctions.createNote(time, content, "", act.database)
+        val id = FirebaseFunctions.createNote(time, content, "", act.database, act.firebaseUser?.uid ?: act.ANONYMOUS)
         Toast.makeText(context, "Your note has been added.", Toast.LENGTH_LONG).show()
         notesET.setText("")
         val note = Note.create()
