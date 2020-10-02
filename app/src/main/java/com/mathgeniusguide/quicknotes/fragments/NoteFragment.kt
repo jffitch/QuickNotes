@@ -95,9 +95,10 @@ class NoteFragment : Fragment() {
         val tags = tagsET.text.toString().replace(Regex(" *, *"), ",").trim()
         val tagsSelected = act.tagList.filter { it.checked }.map {it.id}
         val tagsSelectedString = tagsSelected.joinToString(",")
+        val tagsString = tags + (if (tags.isBlank() || tagsSelectedString.isBlank()) "" else ",") + tagsSelectedString
         val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
         val time = sdf.format(Date())
-        val id = FirebaseFunctions.createNote(time, content, tags + (if (tags.isBlank() || tagsSelectedString.isBlank()) "" else ",") + tagsSelectedString, act.database, act.firebaseUser?.uid ?: act.ANONYMOUS)
+        val id = FirebaseFunctions.createNote(time, content, tagsString, act.database, act.firebaseUser?.uid ?: act.ANONYMOUS)
         Toast.makeText(context, "Your note has been added.", Toast.LENGTH_LONG).show()
         noteET.setText("")
         tagsET.setText("")
@@ -105,7 +106,7 @@ class NoteFragment : Fragment() {
         note.id = id
         note.content = content
         note.time = time
-        note.tags = tags + tagsSelectedString
+        note.tags = tagsString
         act.noteList.add(note)
         for (tag in (note.tags ?: "").split(",")) {
             act.tagList.add(Tag(tag, false))
@@ -119,6 +120,9 @@ class NoteFragment : Fragment() {
     fun saveClicked() {
         val content = noteET.text.toString()
         val tags = tagsET.text.toString().replace(Regex(" *, *"), ",").trim()
+        val tagsSelected = act.tagList.filter { it.checked }.map {it.id}
+        val tagsSelectedString = tagsSelected.joinToString(",")
+        val tagsString = tags + (if (tags.isBlank() || tagsSelectedString.isBlank()) "" else ",") + tagsSelectedString
         alert.setTitle(R.string.save_note)
         alert.setMessage(R.string.save_alert)
         alert.setPositiveButton(R.string.yes, DialogInterface.OnClickListener { dialog, which ->
@@ -126,13 +130,13 @@ class NoteFragment : Fragment() {
                 act.noteSelected.id ?: "",
                 act.noteSelected.time ?: "",
                 content,
-                tags,
+                tagsString,
                 act.database,
                 act.firebaseUser?.uid ?: act.ANONYMOUS
             )
             val note = act.noteList.first { it.id == act.noteSelected.id ?: "" }
             note.content = content
-            note.tags = tags
+            note.tags = tagsString
             for (tag in (note.tags ?: "").split(",")) {
                 act.tagList.add(Tag(tag, false))
             }

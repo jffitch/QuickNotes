@@ -49,6 +49,7 @@
     <string name="delete_note">Delete Note</string>
     <string name="save_alert">Are you sure you want to replace this note?</string>
     <string name="delete_alert">Are you sure you want to delete this note?</string>
+    <string name="multiple_notes_alert">You are about to add %1$d notes. Are you sure you want to continue?</string>
 
     <!-- Search Screen -->
     <string name="keywords">Keywords</string>

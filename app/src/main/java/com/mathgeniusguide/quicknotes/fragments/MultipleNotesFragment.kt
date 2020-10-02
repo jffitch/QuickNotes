@@ -1,6 +1,7 @@
 package com.mathgeniusguide.quicknotes.fragments
 
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -48,21 +49,24 @@ class MultipleNotesFragment : Fragment() {
         val content = notesET.text.toString()
         val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
         val time = sdf.format(Date())
-        val id = FirebaseFunctions.createNote(time, content, "", act.database, act.firebaseUser?.uid ?: act.ANONYMOUS)
-        Toast.makeText(context, "Your note has been added.", Toast.LENGTH_LONG).show()
-        notesET.setText("")
-        val note = Note.create()
-        note.id = id
-        note.content = content
-        note.time = time
-        note.tags = ""
-        act.noteList.add(note)
-        for (tag in (note.tags ?: "").split(",")) {
-            act.tagList.add(Tag(tag, false))
-        }
-        act.tagList = act.tagList.distinctBy { it.id }.filter { it.id.length <= 20 && it.id.isNotEmpty() }
-            .toMutableList()
-        act.tagList.sortBy { it.id }
-        act.noteList.sortByDescending { it.time }
+        val notes = content.trim().split("\n").filter { it.isNotBlank() }
+        alert.setTitle(R.string.multiple_notes)
+        alert.setMessage(String.format(resources.getString(R.string.multiple_notes_alert), notes.size))
+        alert.setPositiveButton(R.string.yes, DialogInterface.OnClickListener { dialog, which ->
+            for (i in notes) {
+                val id = FirebaseFunctions.createNote(time, i, "", act.database, act.firebaseUser?.uid ?: act.ANONYMOUS)
+                notesET.setText("")
+                val note = Note.create()
+                note.id = id
+                note.content = i
+                note.time = time
+                note.tags = ""
+                act.noteList.add(note)
+            }
+            act.noteList.sortByDescending { it.time }
+            Toast.makeText(context, "Your notes have been added.", Toast.LENGTH_LONG).show()
+        })
+        alert.setNegativeButton(R.string.no, null)
+        alert.show()
     }
 }
