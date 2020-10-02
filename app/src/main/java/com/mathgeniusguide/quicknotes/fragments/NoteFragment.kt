@@ -59,7 +59,7 @@ class NoteFragment : Fragment() {
         } else {
             submitBU.visibility = View.GONE
             noteET.setText(act.noteSelected.content)
-            tagsET.setText(act.noteSelected.tags)
+            tagsET.setText((act.noteSelected.tags ?: "").split(Regex(" *, *")).filter {it.length > 20 || !act.tagList.any{i -> i.id == it}}.joinToString(","))
         }
 
         alert = AlertDialog.Builder(context)

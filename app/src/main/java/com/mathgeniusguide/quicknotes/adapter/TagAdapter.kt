@@ -22,6 +22,12 @@ class TagAdapter (private val items: List<Tag>, val act: MainActivity) : Recycle
         val i = items[position]
         holder.tagName.text = i.id
         holder.tagChecked.isChecked = false
+        if (!act.noteSelected.tags.isNullOrEmpty()) {
+            if (act.noteSelected.tags!!.trim().split(Regex(" *, *")).contains(i.id)) {
+                holder.tagChecked.isChecked = true
+                act.tagList[act.tagList.indexOfFirst { it.id == i.id }].checked = holder.tagChecked.isChecked
+            }
+        }
         holder.tagChecked.setOnClickListener {
             act.tagList[act.tagList.indexOfFirst { it.id == i.id }].checked = holder.tagChecked.isChecked
         }

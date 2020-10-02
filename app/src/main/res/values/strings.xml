@@ -58,12 +58,12 @@
     <!-- List Screen -->
     <string name="date">Date</string>
     <string name="description">Description</string>
-    <string name="all_posts">All Posts</string>
-    <string name="posts_involving">Posts Involving %1$s</string>
-    <string name="posts_tagged">Posts Tagged %1$s</string>
-    <string name="posts_involving_and_tagged">Posts Involving %1$s And Tagged %2$s</string>
-    <string name="untagged_posts">Untagged Posts</string>
-    <string name="untagged_posts_involving">Untagged Posts Involving %1$s</string>
+    <string name="all_posts">All %1$d Notes</string>
+    <string name="posts_involving">%1$d Notes Involving %2$s</string>
+    <string name="posts_tagged">%1$d Notes Tagged %2$s</string>
+    <string name="posts_involving_and_tagged">%1$d Notes Involving %2$s And Tagged %3$s</string>
+    <string name="untagged_posts">%1$d Untagged Notes</string>
+    <string name="untagged_posts_involving">%1$d Untagged Notes Involving %2$s</string>
 
     <!-- Error Messages -->
     <string name="fields_empty">Please fill in all fields.</string>

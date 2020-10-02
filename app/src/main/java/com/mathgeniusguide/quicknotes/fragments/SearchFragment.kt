@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mathgeniusguide.quicknotes.MainActivity
 import com.mathgeniusguide.quicknotes.R
 import com.mathgeniusguide.quicknotes.adapter.TagAdapter
+import com.mathgeniusguide.quicknotes.database.Note
 import com.mathgeniusguide.quicknotes.database.Tag
 import kotlinx.android.synthetic.main.search_fragment.*
 import java.util.*
@@ -47,6 +48,7 @@ class SearchFragment : Fragment() {
     }
 
     fun setUpTags() {
+        act.noteSelected = Note()
         val tagsHalves = listOf(emptyList<Tag>().toMutableList(), emptyList<Tag>().toMutableList())
         var tagsHalf = 0
         for (i in act.tagList) {
@@ -74,15 +76,15 @@ class SearchFragment : Fragment() {
         if (act.noteListSelected.isNotEmpty()) {
             if (tagsString.isEmpty()) {
                 if (keywords.isEmpty()) {
-                    act.searchDescription = resources.getString(R.string.all_posts)
+                    act.searchDescription = String.format(resources.getString(R.string.all_posts), act.noteListSelected.size)
                 } else {
-                    act.searchDescription = String.format(resources.getString(R.string.posts_involving), keywords)
+                    act.searchDescription = String.format(resources.getString(R.string.posts_involving), act.noteListSelected.size, keywords)
                 }
             } else {
                 if (keywords.isEmpty()) {
-                    act.searchDescription = String.format(resources.getString(R.string.posts_tagged), tagsString)
+                    act.searchDescription = String.format(resources.getString(R.string.posts_tagged), act.noteListSelected.size, tagsString)
                 } else {
-                    act.searchDescription = String.format(resources.getString(R.string.posts_involving_and_tagged), keywords, tagsString)
+                    act.searchDescription = String.format(resources.getString(R.string.posts_involving_and_tagged), act.noteListSelected.size, keywords, tagsString)
                 }
             }
 
@@ -100,9 +102,9 @@ class SearchFragment : Fragment() {
             .toMutableList()
         if (act.noteListSelected.isNotEmpty()) {
             if (keywords.isEmpty()) {
-                    act.searchDescription = resources.getString(R.string.untagged_posts)
+                    act.searchDescription = String.format(resources.getString(R.string.untagged_posts), act.noteListSelected.size)
                 } else {
-                    act.searchDescription = String.format(resources.getString(R.string.untagged_posts_involving), keywords)
+                    act.searchDescription = String.format(resources.getString(R.string.untagged_posts_involving), act.noteListSelected.size, keywords)
                 }
             findNavController().navigate(R.id.action_search_to_list)
         } else {
